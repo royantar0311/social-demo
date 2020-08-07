@@ -1,0 +1,24 @@
+.infobar,
+.infobar {
+  position: fixed;
+  top: 0;
+  height: 7vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 106, 255, 1);
+  color: white;
+  z-index: 100;
+}
+.infobar__leftInnerContainer {
+  padding-left: 10vw;
+}
+.infobar__rightInnerContainer {
+  padding-right: 10vw;
+}
+.infobar__rightInnerContainer > a {
+  color: red;
+  text-decoration: none;
+  font-size: 3vh;
+}

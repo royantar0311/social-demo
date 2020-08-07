@@ -1,0 +1,41 @@
+.input {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 7vh;
+  z-index: 100;
+  background-color: white;
+  padding-top: 5px;
+}
+.input__form {
+  width: 90vw;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+.input__input {
+  padding: 5px 12px;
+  width: 95%;
+  border: none;
+  border-radius: 20px;
+  background-color: rgba(130, 130, 130, 0.1);
+  overflow-y: auto;
+}
+.input__btn {
+  background-color: rgba(130, 130, 130, 0.1);
+  border: none;
+  cursor: pointer;
+  width: 10%;
+  border-radius: 30px;
+  padding: 12.5px 12px;
+}
+.input__input:focus {
+  background-color: rgba(130, 130, 130, 0.2);
+  outline: none !important;
+}
+.input__btn:hover {
+  background-color: rgba(130, 130, 130, 0.2);
+}
+.input__btn:focus {
+  outline: none !important;
+}
