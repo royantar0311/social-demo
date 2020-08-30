@@ -2,40 +2,57 @@
   position: fixed;
   bottom: 0;
   width: 100vw;
-  height: 7vh;
+  height: 5vh;
   z-index: 100;
-  background-color: white;
+  margin: 0;
+  background-color: white !important;
   padding-top: 5px;
 }
 .input__form {
+  height: 1vh;
   width: 90vw;
   margin: auto;
   display: flex;
   align-items: center;
 }
 .input__input {
-  padding: 5px 12px;
-  width: 95%;
+  height: 43px;
+  width: 90%;
+  padding-left: 15px;
   border: none;
   border-radius: 20px;
   background-color: rgba(130, 130, 130, 0.1);
   overflow-y: auto;
 }
-.input__btn {
+.input__input:hover,
+.input__input:focus {
+  outline: none !important;
+}
+.input__sendMessageBtn,
+.input__fileUploadBtn + label,
+.input__fileUploadBtn:focus + labelx {
   background-color: rgba(130, 130, 130, 0.1);
   border: none;
+  font-size: inherit;
+
+  text-align: center;
   cursor: pointer;
   width: 10%;
   border-radius: 30px;
   padding: 12.5px 12px;
 }
-.input__input:focus {
+.input__sendMessageBtn:focus,
+.input__sendMessageBtn:hover,
+.input__fileUploadBtn + label:hover {
   background-color: rgba(130, 130, 130, 0.2);
   outline: none !important;
 }
-.input__btn:hover {
-  background-color: rgba(130, 130, 130, 0.2);
-}
-.input__btn:focus {
-  outline: none !important;
+
+.input__fileUploadBtn {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }

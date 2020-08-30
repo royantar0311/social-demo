@@ -51,6 +51,25 @@ io.on('connection', (socket) => {
     callback();
   });
 
+  socket.on('send-file', (file, callback) => {
+    const userIndex = getUser(socket.id);
+    io.to(users[userIndex].room).emit('file', file);
+    callback();
+  });
+
+  socket.on('file-data', (fileData, callback) => {
+    const userIndex = getUser(socket.id);
+    console.log(fileData);
+    io.to(users[userIndex].room).emit('recieve-file-data', fileData);
+    callback();
+  });
+
+  socket.on('file-sending-complete', (err, callback) => {
+    const userIndex = getUser(socket.id);
+    io.to(users[userIndex].room).emit('file-recieve-complete', err);
+    callback();
+  });
+
   socket.on('disconnect', () => {
     const user = removeUser(socket.id);
 
