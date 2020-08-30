@@ -19,7 +19,7 @@ function Chat({ location }) {
   const [message, setMessage] = useState('');
   const [percentage, setPercentage] = useState(0);
   const [incomingFile, setIncomingFile] = useState('false');
-  const END_POINT = 'http://localhost:5000'; //'https://social-web-server.herokuapp.com/';
+  const END_POINT = 'https://social-web-server.herokuapp.com/';
   // const setIsOwn = (bool) => {
   //   isOwn = bool;
   // };
