@@ -11,7 +11,7 @@ let fileName = '';
 let fileSender = '';
 let fileSize = 0;
 let fileSizeRecieved = 0;
-//let isOwn = 'false';
+let isOwn = 'false';
 function Chat({ location }) {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
@@ -38,7 +38,10 @@ function Chat({ location }) {
       socket.off();
     };
   }, [END_POINT, location.search]);
-
+  const setIsOwn = (bool) => {
+    isOwn = bool;
+    console.log('aiche', isOwn);
+  };
   useEffect(() => {
     socket.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
@@ -51,15 +54,14 @@ function Chat({ location }) {
       fileSize = fileToRecieve.size;
       fileType = fileToRecieve.type;
       fileSender = fileToRecieve.sender;
-    });
-    socket.on('recieve-file-data', (recievedChunk) => {
-      // setFileSizeRecieved(
-      //   (fileSizeRecieved) => fileSizeRecieved + recievedChunk.byteLength
-      // );
-      fileSizeRecieved += recievedChunk.byteLength;
-      setPercentage((fileSizeRecieved / fileSize) * 100);
-      fileData.push(recievedChunk);
-      recievedChunk = '';
+      console.log(fileToRecieve);
+      if (isOwn === 'false') {
+        console.log('here 1');
+        socket.on('recieve-file-data', recievingListener);
+      } else {
+        socket.removeListener('recieve-file-data', recievingListener);
+        console.log('here 2');
+      }
     });
 
     socket.on('file-recieve-complete', (err) => {
@@ -68,9 +70,15 @@ function Chat({ location }) {
         console.log(err);
         return;
       }
-      // if (isOwn === 'true') {
-      //   return;
-      // }
+
+      if (isOwn === 'true') {
+        resetFields();
+
+        return;
+      }
+
+      console.log('ekhaneo aiche', isOwn);
+
       const blob = new Blob([...fileData], { fileType });
       const url = window.URL.createObjectURL(blob);
 
@@ -83,16 +91,31 @@ function Chat({ location }) {
         { text: fileName, user: fileSender, link: link },
       ]);
       //setIsOwn('false');
-      setPercentage(0);
-      fileData = [];
-      fileType = '';
-      fileSizeRecieved = 0;
-      fileName = '';
-      fileSender = '';
-      fileSize = 0;
+      resetFields();
     });
   }, []);
 
+  const resetFields = () => {
+    setPercentage(0);
+    fileData = [];
+    fileType = '';
+    fileSizeRecieved = 0;
+    fileName = '';
+    fileSender = '';
+    fileSize = 0;
+    isOwn = 'false';
+  };
+  const recievingListener = (recievedChunk) => {
+    // setFileSizeRecieved(
+    //   (fileSizeRecieved) => fileSizeRecieved + recievedChunk.byteLength
+    // );
+
+    fileSizeRecieved += recievedChunk.byteLength;
+    console.log((fileSizeRecieved / fileSize) * 100);
+    setPercentage((fileSizeRecieved / fileSize) * 100);
+    fileData.push(recievedChunk);
+    recievedChunk = '';
+  };
   const sendMessage = (e) => {
     e.preventDefault();
     if (message) {
@@ -115,8 +138,9 @@ function Chat({ location }) {
           incomingFile={incomingFile}
           name={name}
           percentage={percentage}
-          // setIsOwn={setIsOwn}
-          //setMessages={setMessages}
+          setIsOwn={setIsOwn}
+          setPercentage={setPercentage}
+          setMessages={setMessages}
         />
       </div>
     </div>
